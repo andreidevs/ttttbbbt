@@ -135,14 +135,9 @@ if os.name == 'posix':
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
 
+driver = None
 
-@contextmanager
-def create_webdriver():
-    driver = web_driver(service=web_service(webdriver_path), options=options)
-    try:
-        yield driver
-    finally:
-        driver.quit()
+session_queue = Queue()
 
 
 def extract_chq(chq: str) -> int:
