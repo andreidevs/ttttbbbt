@@ -139,6 +139,14 @@ driver = None
 
 session_queue = Queue()
 
+@contextmanager
+def create_webdriver():
+    driver = web_driver(service=web_service(webdriver_path), options=options)
+    try:
+        yield driver
+    finally:
+        driver.quit()
+
 
 def extract_chq(chq: str) -> int:
     with create_webdriver() as driver:
